@@ -1,0 +1,136 @@
+int tmpint;
+uint tmpuint;
+string tmpstring;
+bool tmpbool;
+double tmpdoub;
+float tmpfloat;
+long mlong;
+void totext(string src,string dst){
+file f;
+file o;
+f.open(src,"rb");
+o.open(dst,"w");
+string s=f.read();
+dictionary savedict=deserialize(s);
+string[] keys=savedict.get_keys();
+keys.sort_ascending(0, keys.length());
+for(uint i=0;i<keys.length();i++)
+{
+if (savedict.get(keys[i],tmpint))
+{
+o.write(keys[i]+"="+"i="+tmpint+"\n");
+continue;
+}
+if (savedict.get(keys[i],mlong))
+{
+o.write(keys[i]+"="+"l="+mlong+"\n");
+continue;
+}
+
+if (savedict.get(keys[i],tmpuint))
+{
+o.write(keys[i]+"="+"u="+tmpuint+"\n");
+continue;
+}
+if (savedict.get(keys[i],tmpfloat))
+{
+o.write(keys[i]+"="+"f="+tmpfloat+"\n");
+continue;
+}
+if (savedict.get(keys[i],tmpdoub))
+{
+o.write(keys[i]+"="+"d="+tmpdoub+"\n");
+continue;
+}
+if (savedict.get(keys[i],tmpstring))
+{
+if(tmpstring.is_empty()){
+tmpstring=" ";
+}
+o.write(keys[i]+"="+"s="+tmpstring+"\n");
+continue;
+}
+if (savedict.get(keys[i],tmpbool))
+{
+o.write(keys[i]+"="+"b="+tmpbool+"\n");
+continue;
+}
+}
+f.close();
+o.close();
+}
+void fromtext(string src,string dst){
+file f;
+file o;
+string content;
+string[] items;
+string[] item;
+string itemname;
+string itemtype;
+dictionary savedict;
+f.open(src,"r");
+o.open(dst,"wb");
+content=f.read();
+items=string_split(content,"\n",true);
+for(uint i=0;i<items.length();i++){
+item=string_split(items[i],"=",true);
+itemname=item[0];
+itemtype=item[1];
+if(itemtype=="i"){
+tmpint=string_to_number(item[2]);
+savedict.set(itemname,tmpint);
+continue;
+}
+if(itemtype=="u"){
+tmpuint=string_to_number(item[2]);
+savedict.set(itemname,tmpuint);
+continue;
+}
+if(itemtype=="l"){
+mlong=string_to_number(item[2]);
+savedict.set(itemname,mlong);
+continue;
+}
+
+if(itemtype=="f"){
+tmpfloat=string_to_number(item[2]);
+savedict.set(itemname,tmpfloat);
+continue;
+}
+if(itemtype=="d"){
+tmpdoub=string_to_number(item[2]);
+savedict.set(itemname,tmpdoub);
+continue;
+}
+if(itemtype=="b"){
+if(item[2]=="0"){
+tmpbool=false;
+savedict.set(itemname,tmpbool);
+}
+if(item[2]=="1"){
+tmpbool=true;
+savedict.set(itemname,tmpbool);
+}
+}
+if(itemtype=="s"){
+tmpstring=item[2];
+savedict.set(itemname,tmpstring);
+}
+}
+string savedata=serialize(savedict);
+o.write(savedata);
+f.close();
+o.close();
+}
+void main()
+{
+string a=input_box("source","source file");
+string b=input_box("dest","dest file");
+string c=input_box("type","0 to save, and 1 to retrieve");
+if(a==""||b==""||c=="") exit();
+int t=string_to_number(c);
+if(t==0) fromtext(a,b);
+else if(t==1) totext(a,b);
+alert("finished","one!");
+exit();
+}
