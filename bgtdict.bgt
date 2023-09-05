@@ -111,7 +111,7 @@ savedict.set(itemname,mlong);
 continue;
 }
 if(itemtype=="sh"){
-short=string_to_number(item[2]);
+mshort=string_to_number(item[2]);
 savedict.set(itemname,mshort);
 continue;
 }
