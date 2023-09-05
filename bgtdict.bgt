@@ -1,3 +1,4 @@
+string version="0.2";
 int tmpint;
 uint tmpuint;
 string tmpstring;
@@ -5,6 +6,19 @@ bool tmpbool;
 double tmpdoub;
 float tmpfloat;
 long mlong;
+short mshort;
+void main()
+{
+string a=input_box("source","source file");
+string b=input_box("dest","dest file");
+string c=input_box("type","0 to save, and 1 to retrieve");
+if(a==""||b==""||c=="") exit();
+int t=string_to_number(c);
+if(t==0) fromtext(a,b);
+else if(t==1) totext(a,b);
+alert("finished","done!");
+exit();
+}
 void totext(string src,string dst){
 file f;
 file o;
@@ -24,6 +38,11 @@ continue;
 if (savedict.get(keys[i],mlong))
 {
 o.write(keys[i]+"="+"l="+mlong+"\n");
+continue;
+}
+if (savedict.get(keys[i],mshort))
+{
+o.write(keys[i]+"="+"sh="+mshort+"\n");
 continue;
 }
 
@@ -91,6 +110,11 @@ mlong=string_to_number(item[2]);
 savedict.set(itemname,mlong);
 continue;
 }
+if(itemtype=="sh"){
+short=string_to_number(item[2]);
+savedict.set(itemname,mshort);
+continue;
+}
 
 if(itemtype=="f"){
 tmpfloat=string_to_number(item[2]);
@@ -121,16 +145,4 @@ string savedata=serialize(savedict);
 o.write(savedata);
 f.close();
 o.close();
-}
-void main()
-{
-string a=input_box("source","source file");
-string b=input_box("dest","dest file");
-string c=input_box("type","0 to save, and 1 to retrieve");
-if(a==""||b==""||c=="") exit();
-int t=string_to_number(c);
-if(t==0) fromtext(a,b);
-else if(t==1) totext(a,b);
-alert("finished","one!");
-exit();
 }
