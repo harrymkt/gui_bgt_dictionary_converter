@@ -1,0 +1,9 @@
+/*
+* the general script for the GUI bgt dictionary converter.
+*/
+string get_type_description(int type)
+{
+if(type==0) return"saves the data back as the dictionary";
+else if(type==1) return"retrieve the data from the dictionary";
+else return "";
+}

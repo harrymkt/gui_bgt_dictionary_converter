@@ -1,0 +1,36 @@
+void perform(string src,string dest,int type)
+{
+error=e_none;
+if(src==""||dest=="")
+{
+alert("error","the source or the destination file does not exist.");
+return;
+}
+if(types.find(type)<0) 
+{
+alert("error","unsupported type "+type);
+return;
+}
+if(type==0)
+{
+string r=fromtext(src,dest);
+if(error!=e_none)
+{
+alert("error",get_etext(error));
+return;
+}
+alert("success",r);
+return;
+}
+else if(type==1)
+{
+string r=totext(src,dest);
+if(error!=e_none)
+{
+alert("error",get_etext(error));
+return;
+}
+alert("success",r);
+return;
+}
+}//end

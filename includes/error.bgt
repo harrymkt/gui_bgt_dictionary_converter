@@ -1,0 +1,20 @@
+/*
+* the error template for the GUI bgt dictionary converter.
+*/
+enum errorcodes
+{
+e_none=0,
+e_fu,
+e_nottype,
+e_nokey,
+e_false_exist
+}
+int error=0;
+string get_etext(int ee=error)
+{
+if(ee==e_none) return"";
+else if(ee==e_false_exist) return"the source or the destination file does not exist";
+else if(ee==e_fu) return"failed for an unknown reason";
+else if(ee==e_nokey) return"bad request: no keys were found";
+else return"";
+}
