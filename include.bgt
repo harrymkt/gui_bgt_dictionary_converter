@@ -1,0 +1,6 @@
+string i_f="includes";
+#include "includes/error.bgt"
+#include "includes/perform.bgt"
+#include"includes/helpful_includes_pack.bgt"
+#include"includes/general.bgt"
+typedef uint8 usmall; typedef int8 small; //since this is only includeable files, we've to declare this as well.
